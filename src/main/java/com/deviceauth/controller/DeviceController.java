@@ -1,0 +1,4 @@
+package com.deviceauth.controller;
+import com.deviceauth.dto.DeviceRequest;import com.deviceauth.service.DeviceService;import jakarta.validation.Valid;import java.security.Principal;import java.util.*;import org.springframework.web.bind.annotation.*;
+@RestController @RequestMapping("/api/devices")
+public class DeviceController {private final DeviceService service;public DeviceController(DeviceService s){service=s;}@GetMapping public List<Map<String,Object>> mine(Principal p){return service.mine(p.getName());}@PostMapping public Map<String,Object> register(Principal p,@Valid @RequestBody DeviceRequest r){return service.register(p.getName(),r);}@PostMapping("/{id}/authenticate") public Map<String,Object> authenticate(Principal p,@PathVariable Long id){return service.authenticate(p.getName(),id);}}
